@@ -1,0 +1,173 @@
+/* ══════════════════════════════════════════
+   Welcome / Splash Screen Styles
+   ══════════════════════════════════════════ */
+
+.welcome {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: #0e0e0e;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2.5rem;
+  overflow: hidden;
+
+  /* Fade out when exiting */
+  opacity: 1;
+  transition: opacity 0.7s ease;
+}
+
+.welcome--exit {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* ── Background radial glow ── */
+.welcome__bg-glow {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    ellipse 60% 55% at 50% 50%,
+    rgba(255, 200, 100, 0.04) 0%,
+    rgba(255, 255, 255, 0.015) 40%,
+    transparent 70%
+  );
+  pointer-events: none;
+  animation: glowPulse 3s ease-in-out infinite alternate;
+}
+
+@keyframes glowPulse {
+  from { opacity: 0.6; }
+  to   { opacity: 1; }
+}
+
+/* ── Logo wrapper ── */
+.welcome__logo-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  /* Start: huge scale */
+  transform: scale(3.5);
+  opacity: 0;
+
+  animation: logoReveal 1.4s cubic-bezier(0.16, 1, 0.3, 1) 0.2s forwards;
+}
+
+/* When animation is done, lock to final state */
+.welcome__logo-wrap--done {
+  transform: scale(1);
+  opacity: 1;
+  animation: none;
+}
+
+@keyframes logoReveal {
+  0% {
+    transform: scale(3.5);
+    opacity: 0;
+    filter: blur(20px);
+  }
+  40% {
+    opacity: 1;
+    filter: blur(4px);
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+    filter: blur(0);
+  }
+}
+
+.welcome__logo {
+  width: clamp(90px, 14vw, 160px);
+  height: auto;
+  display: block;
+  filter: drop-shadow(0 0 40px rgba(255, 220, 130, 0.25));
+}
+
+/* ── Tagline ── */
+.welcome__tagline {
+  font-family: 'Inter', sans-serif;
+  font-size: clamp(0.75rem, 1.2vw, 0.9rem);
+  font-weight: 400;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.35);
+  margin-top: -1.5rem;
+
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 0.8s ease 0.15s, transform 0.8s ease 0.15s;
+}
+
+.welcome__tagline--visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ── Enter button ── */
+.welcome__btn {
+  position: relative;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+
+  opacity: 0;
+  transform: translateY(14px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+
+.welcome__btn--visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.welcome__btn-text {
+  font-family: 'Samurai', 'Outfit', sans-serif;
+  font-size: clamp(1.4rem, 3vw, 2.2rem);
+  font-weight: normal;
+  letter-spacing: 6px;
+  text-transform: uppercase;
+  color: #ffffff;
+  transition: color 0.3s ease, letter-spacing 0.4s ease;
+}
+
+.welcome__btn:hover .welcome__btn-text {
+  color: rgba(255, 220, 130, 0.9);
+  letter-spacing: 10px;
+}
+
+/* Animated underline */
+.welcome__btn-line {
+  display: block;
+  height: 1px;
+  width: 0%;
+  background: linear-gradient(90deg, transparent, rgba(255, 220, 130, 0.8), transparent);
+  transition: width 0.5s ease;
+}
+
+.welcome__btn:hover .welcome__btn-line {
+  width: 100%;
+}
+
+/* Subtle outer glow on hover */
+.welcome__btn::after {
+  content: '';
+  position: absolute;
+  inset: -16px -32px;
+  border-radius: 999px;
+  background: radial-gradient(ellipse at center, rgba(255,200,80,0.06), transparent 70%);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.welcome__btn:hover::after {
+  opacity: 1;
+}
