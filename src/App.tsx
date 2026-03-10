@@ -7,6 +7,7 @@ import person2 from './assets/person2.png'
 import katana from './assets/katana.png'
 import videoThumb from './assets/tumbnail.webp'
 import Particles from './Particles'
+import bg from './assets/dojo.jpg'
 import './App.css'
 
 // ─── Spotlight Configuration ──────────────────────────────────────────
@@ -156,7 +157,16 @@ export default function App({ isPlaying, onToggleMusic }: AppProps) {
   }, [activeSection])
 
   return (
-    <div style={{ minHeight: '100vh', background: 'linear-gradient(135deg, #000000, #0a0a0a, #111122);', position: 'relative' }}>
+    <div
+      style={{
+        minHeight: '100vh',
+        backgroundImage: `linear-gradient(135deg, rgba(0,0,0,0.8), rgba(10,10,10,0.9)), url(${bg})`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat',
+        position: 'relative'
+      }}
+    >
 
       {/* ── Katana Slash Transition Overlay ── */}
       <div className={`katana-overlay ${transitionState === 'entering' ? 'is-entering' : ''} ${transitionState === 'exiting' ? 'is-exiting' : ''}`}>
