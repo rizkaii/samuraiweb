@@ -1,0 +1,506 @@
+/* ─────────────────────────────────────────
+   BLOG PAGE — Samurai Chronicles
+   Colors aligned with the hero dark theme
+   Typography follows the golden ratio scale
+   ───────────────────────────────────────── */
+
+/* ── Blog Section ─────────────────────── */
+.blog {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  background: linear-gradient(160deg, #0a0a0a 0%, #0e0e12 40%, #0b0b10 100%);
+  padding: 5rem 3rem 4rem;
+  overflow: hidden;
+}
+
+/* Subtle grid texture overlay */
+.blog::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.015) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.015) 1px, transparent 1px);
+  background-size: 60px 60px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Warm amber glow top-left, cold blue glow bottom-right */
+.blog::after {
+  content: '';
+  position: absolute;
+  top: -120px;
+  left: -80px;
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, rgba(200, 134, 10, 0.06) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ── Scroll Arrow (shared) ─────────────── */
+.scroll-arrow {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: rgba(255, 255, 255, 0.7);
+  border-radius: 999px;
+  padding: 10px 18px 8px;
+  cursor: pointer;
+  z-index: 100;
+  backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+  font-family: var(--font-body);
+  font-size: 0.7rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.scroll-arrow:hover {
+  background: rgba(200, 134, 10, 0.12);
+  border-color: rgba(200, 134, 10, 0.4);
+  color: rgba(200, 134, 10, 1);
+  transform: translateX(-50%) translateY(-3px);
+  box-shadow: 0 8px 24px rgba(200, 134, 10, 0.15);
+}
+
+.scroll-arrow svg {
+  width: 18px;
+  height: 18px;
+}
+
+.scroll-arrow__label {
+  font-size: 0.65rem;
+  letter-spacing: 2px;
+  opacity: 0.7;
+}
+
+/* Hero scroll-down */
+.scroll-arrow--down {
+  bottom: 2rem;
+  animation: arrowBob 2s ease-in-out infinite;
+}
+
+/* Blog scroll-up */
+.scroll-arrow--up {
+  top: 6rem;
+  flex-direction: column-reverse;
+  /* label above icon */
+  animation: arrowBobUp 2s ease-in-out infinite;
+}
+
+@keyframes arrowBob {
+
+  0%,
+  100% {
+    transform: translateX(-50%) translateY(0);
+  }
+
+  50% {
+    transform: translateX(-50%) translateY(6px);
+  }
+}
+
+.scroll-arrow--down:hover {
+  animation: none;
+}
+
+@keyframes arrowBobUp {
+
+  0%,
+  100% {
+    transform: translateX(-50%) translateY(0);
+  }
+
+  50% {
+    transform: translateX(-50%) translateY(-6px);
+  }
+}
+
+.scroll-arrow--up:hover {
+  animation: none;
+}
+
+/* ── Blog Header ────────────────────────── */
+.blog__header {
+  position: relative;
+  z-index: 1;
+  margin-bottom: 2.4rem;
+  /* Added top margin to push content below the up-arrow button */
+  margin-top: 2rem;
+}
+
+.blog__title {
+  font-family: var(--font-display);
+  font-size: var(--fs-md);
+  /* 36.6px — golden ratio md */
+  font-weight: 900;
+  line-height: 1.1;
+  margin-bottom: 0.5rem;
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.blog__title-en {
+  color: var(--fg);
+  font-size: var(--fs-lg);
+  /* 59.2px — golden ratio lg */
+  letter-spacing: -1px;
+}
+
+.blog__title-accent {
+  color: rgba(200, 134, 10, 1);
+  /* Amber gold */
+  font-family: var(--font-samurai);
+  font-size: var(--fs-md);
+  letter-spacing: 2px;
+}
+
+.blog__desc {
+  font-family: var(--font-body);
+  font-size: var(--fs-xs);
+  /* 14px */
+  color: var(--muted);
+  max-width: 420px;
+  line-height: 1.6;
+}
+
+/* ── Featured Grid (top 3 cards) ───────── */
+.blog__featured-grid {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: 1.1fr 1fr 1fr;
+  grid-template-rows: auto;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  align-items: start;
+}
+
+/* ── Regular Grid (bottom 3 cards) ─────── */
+.blog__grid {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+}
+
+/* ── Blog Card ────────────────────────── */
+.blog-card {
+  position: relative;
+  border-radius: 18px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  cursor: pointer;
+  transition:
+    transform 0.35s cubic-bezier(0.23, 1, 0.32, 1),
+    box-shadow 0.35s cubic-bezier(0.23, 1, 0.32, 1),
+    border-color 0.35s ease;
+}
+
+.blog-card:hover {
+  transform: translateY(-6px) scale(1.01);
+  border-color: rgba(255, 255, 255, 0.14);
+  box-shadow:
+    0 20px 60px rgba(0, 0, 0, 0.5),
+    0 0 0 1px rgba(255, 255, 255, 0.06);
+}
+
+/* Featured tall card (middle) */
+.blog-card--tall {
+  grid-row: 1;
+  min-height: 340px;
+}
+
+.blog-card--normal {
+  min-height: 240px;
+}
+
+.blog-card--regular {
+  min-height: 200px;
+}
+
+/* Accent left border line */
+.blog-card__accent-line {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 3px;
+  height: 100%;
+  opacity: 0.7;
+  border-radius: 18px 0 0 18px;
+  transition: opacity 0.3s ease, width 0.3s ease;
+}
+
+.blog-card:hover .blog-card__accent-line {
+  opacity: 1;
+  width: 4px;
+}
+
+/* SVG background pattern */
+.card-pattern {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 55%;
+  height: 100%;
+  opacity: 1;
+  pointer-events: none;
+}
+
+/* Card content */
+.blog-card__content {
+  position: relative;
+  z-index: 2;
+  padding: 1.4rem 1.4rem 1.2rem 1.6rem;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  justify-content: flex-end;
+}
+
+/* Category label */
+.blog-card__category {
+  font-family: var(--font-body);
+  font-size: 0.65rem;
+  /* slightly below xs */
+  font-weight: 700;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  margin-bottom: 0.5rem;
+  display: block;
+  opacity: 0.9;
+}
+
+/* Card title */
+.blog-card__title {
+  font-family: var(--font-display);
+  font-size: var(--fs-sm);
+  /* 22.6px — golden ratio sm */
+  font-weight: 700;
+  line-height: 1.25;
+  color: var(--fg);
+  margin-bottom: 0.5rem;
+  transition: opacity 0.25s;
+}
+
+.blog-card:hover .blog-card__title {
+  opacity: 0.92;
+}
+
+/* Card excerpt */
+.blog-card__excerpt {
+  font-family: var(--font-body);
+  font-size: var(--fs-xs);
+  /* 14px */
+  color: var(--muted);
+  line-height: 1.55;
+  margin-bottom: 1rem;
+  display: -webkit-box;
+  line-clamp: 2;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Read button */
+.blog-card__btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid;
+  border-radius: 999px;
+  padding: 6px 16px;
+  font-family: var(--font-body);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  cursor: pointer;
+  width: fit-content;
+  transition:
+    background 0.25s ease,
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.blog-card__btn:hover {
+  background: rgba(255, 255, 255, 0.08);
+  transform: translateX(4px);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.3);
+}
+
+/* ── Katana Slash Transition Overlay ────── */
+.katana-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+/* The two slash halves */
+.katana-slash--top,
+.katana-slash--bottom {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 50%;
+  background: #0a0a0a;
+  transition: transform 0.55s cubic-bezier(0.77, 0, 0.175, 1);
+}
+
+.katana-slash--top {
+  top: 0;
+  transform: translateY(-100%);
+  clip-path: polygon(0 0, 100% 0, 100% 90%, 0 100%);
+}
+
+.katana-slash--bottom {
+  bottom: 0;
+  transform: translateY(100%);
+  clip-path: polygon(0 0, 100% 10%, 100% 100%, 0 100%);
+}
+
+/* Slash line that sweeps across */
+.katana-slash__line {
+  position: absolute;
+  top: 50%;
+  left: -20%;
+  width: 140%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, rgba(200, 134, 10, 0.8), rgba(255, 255, 255, 0.9), rgba(200, 134, 10, 0.8), transparent);
+  transform: translateY(-50%) rotate(-2deg);
+  opacity: 0;
+  transition: opacity 0.1s ease;
+  box-shadow: 0 0 12px rgba(200, 134, 10, 0.6), 0 0 30px rgba(255, 255, 255, 0.3);
+}
+
+/* ACTIVE state — panels slide in from top & bottom */
+.katana-overlay.is-entering .katana-slash--top {
+  transform: translateY(0%);
+}
+
+.katana-overlay.is-entering .katana-slash--bottom {
+  transform: translateY(0%);
+}
+
+.katana-overlay.is-entering .katana-slash__line {
+  opacity: 1;
+}
+
+.katana-overlay.is-entering .katana-slice-img {
+  animation: katanaSweep 1s cubic-bezier(0.19, 1, 0.22, 1) forwards;
+  opacity: 1;
+}
+
+/* Katana Image styling */
+.katana-slice-img {
+  position: absolute;
+  top: 50%;
+  left: -50%;
+  width: 600px;
+  max-width: 80vw;
+  height: auto;
+  transform: translateY(-50%) rotate(-15deg);
+  pointer-events: none;
+  z-index: 10001;
+  opacity: 0;
+  filter:
+    drop-shadow(0 0 10px rgba(255, 255, 255, 0.5)) drop-shadow(0 0 20px rgba(200, 134, 10, 0.3));
+}
+
+@keyframes katanaSweep {
+  0% {
+    left: -100%;
+    transform: translateY(-50%) rotate(-25deg) scale(1.2);
+  }
+
+  100% {
+    left: 150%;
+    transform: translateY(-50%) rotate(15deg) scale(0.8);
+  }
+}
+
+/* EXITING state — panels slide away */
+.katana-overlay.is-exiting .katana-slash--top {
+  transform: translateY(-100%);
+}
+
+.katana-overlay.is-exiting .katana-slash--bottom {
+  transform: translateY(100%);
+}
+
+.katana-overlay.is-exiting .katana-slash__line {
+  opacity: 0;
+}
+
+/* Samurai glyph watermark in the center during transition */
+.katana-slash__glyph {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-family: var(--font-samurai);
+  font-size: 5rem;
+  color: rgba(200, 134, 10, 0.25);
+  letter-spacing: 4px;
+  white-space: nowrap;
+  text-transform: uppercase;
+  opacity: 0;
+  transition: opacity 0.2s ease 0.15s;
+  pointer-events: none;
+}
+
+.katana-overlay.is-entering .katana-slash__glyph {
+  opacity: 1;
+}
+
+/* ── Responsive ─────────────────────────── */
+@media (max-width: 1100px) {
+  .blog__featured-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .blog__featured-grid .blog-card:nth-child(3) {
+    grid-column: span 2;
+  }
+
+  .blog__grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 700px) {
+  .blog {
+    padding: 4rem 1.2rem 3rem;
+  }
+
+  .blog__featured-grid,
+  .blog__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .blog__featured-grid .blog-card:nth-child(3) {
+    grid-column: span 1;
+  }
+
+  .blog__title-en {
+    font-size: var(--fs-md);
+  }
+
+  .blog-card--tall {
+    min-height: 240px;
+  }
+}

@@ -38,7 +38,7 @@ export default function Welcome({ onEnter }: WelcomeProps) {
         onClick={handleEnter}
         aria-label="Masuk ke website"
       >
-        <span className="welcome__btn-text">Masuk</span>
+        <span className="welcome__btn-text">Explore</span>
         <span className="welcome__btn-line" />
       </button>
 
